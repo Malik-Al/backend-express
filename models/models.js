@@ -1,0 +1,55 @@
+const sequelize = require('../db')
+const {DataTypes} = require('sequelize')
+
+
+const User = sequelize.define('user',{
+    id: {type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true},
+    email: {type: DataTypes.STRING, unicode: true},
+    password: {type: DataTypes.STRING},
+    role: {type: DataTypes.STRING, defaultValue: 'USER'}
+})
+
+
+const Basket = sequelize.define('basket',{
+    id: {type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true},
+})
+
+
+const BasketLaptop = sequelize.define('basket_laptop',{
+    id: {type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true},
+})
+
+
+const Laptop = sequelize.define('laptop',{
+    id: {type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true},
+    name: {type: DataTypes.STRING, unicode: true, allowNull: false},
+    price: {type: DataTypes.INTEGER, allowNull: false},
+    description: {type: DataTypes.STRING, allowNull: false},
+    img: {type: DataTypes.STRING, allowNull: false}
+})
+
+
+const Model = sequelize.define('model',{
+    id: {type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true},
+    name: {type: DataTypes.STRING, unicode: true, allowNull: false},
+})
+
+User.hasOne(Basket)
+Basket.belongsTo(User)
+
+Basket.hasMany(BasketLaptop)
+BasketLaptop.belongsTo(Basket)
+
+Model.hasMany(Laptop)
+Laptop.belongsTo(Model)
+
+Laptop.hasMany(BasketLaptop)
+BasketLaptop.belongsTo(Laptop)
+
+module.exports = {
+    User,
+    Basket,
+    Model,
+    Laptop,
+    BasketLaptop
+}
