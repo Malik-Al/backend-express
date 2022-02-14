@@ -1,15 +1,20 @@
+const {validationResult} = require('express-validator')
 const apiError = require('../error/apiError')
 const userService = require('../service/auth/user.service')
 
 class UserController {
     async registration(req, res, next) {
         try {
+            const errors = validationResult(req)
+            if(!errors.isEmpty()){
+                return next(apiError.badRequest('Ошибка при валидаций', errors.array()))
+            }
             const {email, password} = req.body
             const userData = await userService.registration(email, password) // передаем поля email, password для регистраций
             res.cookie('refreshToken', userData.refreshToken, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true}) // записываем в cookie refreshToken с времени жизни 30 дней
             return res.json(userData)
         }catch (e) {
-            console.log(e)
+            next(e)
         }
     }
 
@@ -25,7 +30,7 @@ class UserController {
         try {
 
         }catch (e) {
-
+            next(e)
         }
     }
 
@@ -36,7 +41,7 @@ class UserController {
             return res.redirect(process.env.API_URL_FRONTEND)
 
         }catch (e) {
-
+            next(e)
         }
     }
 
@@ -45,7 +50,7 @@ class UserController {
         try {
 
         }catch (e) {
-
+            next(e)
         }
     }
 
@@ -53,7 +58,7 @@ class UserController {
         try {
 
         }catch (e) {
-
+            next(e)
         }
     }
 

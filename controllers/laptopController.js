@@ -9,7 +9,7 @@ class LaptopController {
             const laptop = await laptopService.createLaptop(name, price, description, modelId, img)
             return res.json(laptop)
         }catch (e){
-            next(apiError.badRequest(e.message))
+            next(e)
         }
     }
 
@@ -19,7 +19,7 @@ class LaptopController {
             let laptopsModel = await laptopService.getAllLaptops(modelId)
             return res.json(laptopsModel)
         }catch (e) {
-            next(apiError.badRequest(e.message))
+            next(e)
         }
     }
 
@@ -29,7 +29,7 @@ class LaptopController {
             const laptop = await laptopService.getOneLaptop(id)
             return res.json(laptop)
         }catch (e) {
-            next(apiError.badRequest(e.message))
+            next(e)
         }
     }
 
@@ -42,7 +42,7 @@ class LaptopController {
             return res.json(newLaptop)
 
         }catch (e) {
-            next(apiError.badRequest(e.message))
+            next(e)
         }
     }
 
@@ -52,7 +52,7 @@ class LaptopController {
             const laptop = await laptopService.deleteLaptop(id)
             return res.json(laptop)
         }catch (e) {
-            next(apiError.badRequest(e.message))
+            next(e)
         }
     }
 }

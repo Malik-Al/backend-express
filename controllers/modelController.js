@@ -8,7 +8,7 @@ class ModelController {
             const model = await modelService.createModel(name)
             return res.json(model)
         }catch (e) {
-            next(apiError.badRequest(e.message))
+            next(e)
         }
     }
 
@@ -17,7 +17,7 @@ class ModelController {
             const models = await modelService.getAllModels()
             return res.json(models)
         }catch (e) {
-            next(apiError.badRequest(e.message))
+            next(e)
         }
     }
 
@@ -28,7 +28,7 @@ class ModelController {
             const laptop = await modelService.deleteModel(id)
             return res.json(laptop)
         }catch (e) {
-            next(apiError.badRequest(e.message))
+            next(e)
         }
     }
 }
