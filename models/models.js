@@ -7,13 +7,13 @@ const User = sequelize.define('user',{
     email: {type: DataTypes.STRING, unicode: true, allowNull: false},
     password: {type: DataTypes.STRING, allowNull: false},
     isActivated: {type: DataTypes.BOOLEAN, defaultValue: false},
-    activationLink: {type: DataTypes.STRING},
+    activationLink: {type: DataTypes.STRING(1000)},
     role: {type: DataTypes.STRING, defaultValue: 'USER'}
 })
 
 const Token = sequelize.define('token',{
     id: {type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true},
-    refreshToken: {type: DataTypes.STRING, allowNull: false},
+    refreshToken: {type: DataTypes.STRING(1000), allowNull: false},
 })
 
 

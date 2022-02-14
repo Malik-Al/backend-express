@@ -16,13 +16,22 @@ class UserService {
 
         const user = await User.create({email, password: hashPassword, activationLink}) // создаем пользователя и передаем значения
         await Basket.create({userId: user.id})
-        await mailService.sendActivationMail(email, activationLink) // отправка писма на почту для активаций
+        await mailService.sendActivationMail(email, `${process.env.API_URL_BACKEND}/api/user/activate/${activationLink}`) // отправка писма на почту для активаций
 
         const userDto = new UserDto(user) // только поля email, id, isActivate
         const tokens = tokenService.generateTokens({...userDto}) // разворачиваем объект
 
         await tokenService.saveToken(userDto.id, tokens.refreshToken) // сохронения refresh токена в базу
         return {...tokens, userId: userDto} // вернет tokens, id, email, isActivate
+    }
+
+    async activate(activationLink){
+        const user = await User.findOne({where: {activationLink: activationLink}}) // проверка на наличие ссылки активаций
+        if(!user){
+            throw new Error('Неккоруктая ссылка активаций') // если ссылка не корректная выбрасываем ошибку
+        }
+        user.isActivated = true; // меняем поля isActivated в значение true и сохроняем
+        await user.save();
     }
 
 }
