@@ -2,7 +2,7 @@ const apiError = require('../error/apiError')
 const {createModel, getAllModels, deleteModel} = require('../service/model.service')
 
 class ModelController {
-    async createModel(req, res, next) {
+    async create(req, res, next) {
         try {
             const {name} = req.body
             const model = await createModel(name)
@@ -12,7 +12,7 @@ class ModelController {
         }
     }
 
-    async getAllModels(req, res, next) {
+    async getAll(req, res, next) {
         try {
             const models = await getAllModels()
             return res.json(models)
@@ -22,7 +22,7 @@ class ModelController {
     }
 
 
-    async deleteModel(req, res, next) {
+    async remove(req, res, next) {
         try {
             const {id} = req.params
             const laptop = await deleteModel(id)

@@ -1,9 +1,9 @@
 const Router = require('express')
 const router = new Router()
-const {createModel, getAllModels, deleteModel} = require('../controllers/modelController')
+const {create, getAll, remove} = require('../controllers/modelController')
 
-router.get('/', getAllModels)
-router.post('/', createModel)
-router.delete('/:id', deleteModel)
+router.get('/', getAll)
+router.post('/', create)
+router.delete('/:id', remove)
 
 module.exports = router

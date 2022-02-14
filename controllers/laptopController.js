@@ -1,5 +1,5 @@
 const apiError = require('../error/apiError')
-const {createLaptop, getAllLaptops, getOneLaptop, deleteLaptop} = require('../service/laptop.service')
+const {createLaptop, getAllLaptops, getOneLaptop, deleteLaptop, updateLaptop} = require('../service/laptop.service')
 
 class LaptopController {
     async create(req, res, next) {
@@ -33,8 +33,13 @@ class LaptopController {
         }
     }
 
-    async update(req, res, next) {
+    async update(req, res, next) {  // TODO доработать
         try {
+            const {name, price, description, modelId} = req.body
+            const {id} = req.params
+            const {img} = req.files
+            const newLaptop = await updateLaptop(name, price, description, modelId, img, id)
+            return res.json(newLaptop)
 
         }catch (e) {
             next(apiError.badRequest(e.message))

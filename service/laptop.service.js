@@ -25,7 +25,17 @@ class LaptopService {
        return await Laptop.destroy({where: {id}})
     }
 
-    async updateLaptop(id){
+    async updateLaptop(name, price, description, modelId, img,id){  // TODO доработать
+        let fileName = `${uuid.v4()}.jpg`
+        await img.mv(path.resolve(__dirname, '..', 'static', fileName))
+        const data = {
+            name: name,
+            price: price,
+            description: description,
+            modelId: modelId,
+            img: fileName
+        }
+        return await Laptop.update(data,{where: {id}})
 
     }
 
