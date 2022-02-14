@@ -58,8 +58,9 @@ BasketLaptop.belongsTo(Laptop)
 
 module.exports = {
     User,
+    Token,
     Basket,
     Model,
     Laptop,
-    BasketLaptop
+    BasketLaptop,
 }
