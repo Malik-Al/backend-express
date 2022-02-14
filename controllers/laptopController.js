@@ -1,12 +1,12 @@
 const apiError = require('../error/apiError')
-const {createLaptop, getAllLaptops, getOneLaptop, deleteLaptop, updateLaptop} = require('../service/laptop.service')
+const laptopService = require('../service/laptop.service')
 
 class LaptopController {
     async create(req, res, next) {
         try {
             const {name, price, description, modelId} = req.body
             const {img} = req.files
-            const laptop = await createLaptop(name, price, description, modelId, img)
+            const laptop = await laptopService.createLaptop(name, price, description, modelId, img)
             return res.json(laptop)
         }catch (e){
             next(apiError.badRequest(e.message))
@@ -16,7 +16,7 @@ class LaptopController {
     async getAll(req, res, next) {
         try {
             const {modelId} = req.query
-            let laptopsModel = await getAllLaptops(modelId)
+            let laptopsModel = await laptopService.getAllLaptops(modelId)
             return res.json(laptopsModel)
         }catch (e) {
             next(apiError.badRequest(e.message))
@@ -26,7 +26,7 @@ class LaptopController {
     async getOne(req, res, next) {
         try {
             const {id} = req.params
-            const laptop = await getOneLaptop(id)
+            const laptop = await laptopService.getOneLaptop(id)
             return res.json(laptop)
         }catch (e) {
             next(apiError.badRequest(e.message))
@@ -38,7 +38,7 @@ class LaptopController {
             const {name, price, description, modelId} = req.body
             const {id} = req.params
             const {img} = req.files
-            const newLaptop = await updateLaptop(name, price, description, modelId, img, id)
+            const newLaptop = await laptopService.updateLaptop(name, price, description, modelId, img, id)
             return res.json(newLaptop)
 
         }catch (e) {
@@ -49,7 +49,7 @@ class LaptopController {
     async remove(req, res, next) {
         try {
             const {id} = req.params
-            const laptop = await deleteLaptop(id)
+            const laptop = await laptopService.deleteLaptop(id)
             return res.json(laptop)
         }catch (e) {
             next(apiError.badRequest(e.message))
