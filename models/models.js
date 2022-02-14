@@ -4,9 +4,16 @@ const {DataTypes} = require('sequelize')
 
 const User = sequelize.define('user',{
     id: {type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true},
-    email: {type: DataTypes.STRING, unicode: true},
-    password: {type: DataTypes.STRING},
+    email: {type: DataTypes.STRING, unicode: true, allowNull: false},
+    password: {type: DataTypes.STRING, allowNull: false},
+    isActivated: {type: DataTypes.BOOLEAN, defaultValue: false},
+    activationLink: {type: DataTypes.STRING},
     role: {type: DataTypes.STRING, defaultValue: 'USER'}
+})
+
+const Token = sequelize.define('token',{
+    id: {type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true},
+    refreshToken: {type: DataTypes.STRING, allowNull: false},
 })
 
 
@@ -36,6 +43,9 @@ const Model = sequelize.define('model',{
 
 User.hasOne(Basket)
 Basket.belongsTo(User)
+
+User.hasMany(Token)  // connect token user
+Token.belongsTo(User)
 
 Basket.hasMany(BasketLaptop)
 BasketLaptop.belongsTo(Basket)
