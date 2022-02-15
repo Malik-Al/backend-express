@@ -44,8 +44,8 @@ class UserService {
         if(!isPassEquals){
             throw ApiError.badRequest(`Неверный пароль`) // если пользовател есть в базе выдаем ошибку
         }
-        const userDto = new UserDto(user)
-        const tokens = tokenService.generateTokens({...userDto})
+        const userDto = new UserDto(user) // только поля email, id, isActivate
+        const tokens = tokenService.generateTokens({...userDto}) // разворачиваем объект
 
         await tokenService.saveToken(userDto.id, tokens.refreshToken) // сохронения refresh токена в базу
         return {...tokens, userId: userDto} // вернет tokens, id, email, isActivate
@@ -55,6 +55,30 @@ class UserService {
     async logout(refreshToken){
         const token = await tokenService.removeToken(refreshToken)
         return token
+    }
+
+    async refresh(refreshToken){
+        if(!refreshToken){
+            throw ApiError.UnauthorizedError()
+        }
+        const userData = tokenService.validateRefreshToken(refreshToken) // поиск refreshToken
+        const tokenFromDb = await tokenService.findToken(refreshToken) //получить refreshToken
+
+        if(!userData || !tokenFromDb){ // если не userData и tokenFromDb не отработали
+            throw ApiError.UnauthorizedError() // выбрасываем ошибку
+        }
+        const user = await User.findOne({where: {userId: userData.id}}) // поиск пользователя
+
+        const userDto = new UserDto(user) // только поля email, id, isActivate
+        const tokens = tokenService.generateTokens({...userDto}) // разворачиваем объект
+
+        await tokenService.saveToken(userDto.id, tokens.refreshToken) // сохронения refresh токена в базу
+        return {...tokens, userId: userDto} // вернет tokens, id, email, isActivate
+    }
+
+
+    async getAllUsers(){
+        return await User.findAll()
     }
 
 }
