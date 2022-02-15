@@ -1,6 +1,8 @@
 const uuid = require("uuid");
 const path = require("path");
 const {Laptop} = require("../models/models");
+const fileImgDelete = require('./delete.img.file')
+const ApiError = require("../error/apiError");
 
 class LaptopService {
     async createLaptop(name, price, description, modelId, img) {
@@ -22,7 +24,12 @@ class LaptopService {
 
 
     async deleteLaptop(id){
-       return await Laptop.destroy({where: {id}})
+       const laptop = await Laptop.findOne({where: {id}})
+        if(!laptop){
+            throw ApiError.badRequest()
+        }
+        await fileImgDelete(laptop.img)
+        return await Laptop.destroy({where: {id}})
     }
 
     async updateLaptop(name, price, description, modelId, img,id){  // TODO доработать
