@@ -1,4 +1,3 @@
-const apiError = require('../error/apiError')
 const laptopService = require('../service/laptop.service')
 
 class LaptopController {
