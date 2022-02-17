@@ -1,6 +1,6 @@
 const Router = require('express')
 const router = new Router()
-const {create, remove, getAll, getOne, update} = require('../controllers/laptopController')
+const {create, remove, getAll, getOne, update} = require('../controllers/laptop.controller')
 
 router.get('/', getAll)
 router.post('/', create)

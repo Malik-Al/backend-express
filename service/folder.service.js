@@ -2,7 +2,7 @@ const path = require("path");
 const fs = require('fs');
 const {promisify} = require('util');
 const readdir = promisify(fs.readdir);
-const ApiError = require("../error/apiError");
+const ApiError = require("../error/api.error");
 
 class FolderService{
 
@@ -29,7 +29,7 @@ class FolderService{
     }
 
 
-    async remove(IdImg){ // удаления файла
+    async remove(IdImg){ // удаления файла     // TODO улучшить код
         const pathUrl = this.pathGenerateUrl()
         const listFile = await readdir(pathUrl) // список файлов в папке
         if(fs.existsSync(pathUrl)) {

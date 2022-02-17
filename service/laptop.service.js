@@ -1,7 +1,7 @@
 const uuid = require("uuid");
 const path = require("path");
-const {Laptop, LaptopInfo} = require("../models/models");
-const ApiError = require("../error/apiError");
+const {Laptop} = require("../models/models");
+const ApiError = require("../error/api.error");
 const folderService = require('./folder.service')
 
 class LaptopService {

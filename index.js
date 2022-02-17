@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser')
 const fileUpload = require('express-fileupload');
 const sequelize = require('./db');
 const router = require('./routes/index');
-const errorHandler = require('./middleware/errorHandling')
+const errorHandler = require('./middleware/error.handling')
 
 const PORT = process.env.PORT || 5000
 

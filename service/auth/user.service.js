@@ -4,7 +4,7 @@ const {User, Basket} = require('../../models/models');
 const mailService = require('./mail.service');
 const tokenService = require('./token.service')
 const UserDto = require('../../dto/user.dto')
-const ApiError = require('../../error/apiError')
+const ApiError = require('../../error/api.error')
 
 class UserService {
     async registration(email, password){
