@@ -11,6 +11,7 @@ const User = sequelize.define('user',{
     role: {type: DataTypes.STRING, defaultValue: 'USER'}
 })
 
+
 const Token = sequelize.define('token',{
     id: {type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true},
     refreshToken: {type: DataTypes.STRING(1000), allowNull: false},
@@ -31,15 +32,22 @@ const Laptop = sequelize.define('laptop',{
     id: {type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true},
     name: {type: DataTypes.STRING, unicode: true, allowNull: false},
     price: {type: DataTypes.INTEGER, allowNull: false},
-    description: {type: DataTypes.STRING, allowNull: false},
-    img: {type: DataTypes.STRING, allowNull: false}
+    img: {type: DataTypes.STRING, allowNull: false},
+
+    screen: {type: DataTypes.STRING, allowNull: false}, // экран
+    processing: {type: DataTypes.STRING, allowNull: false}, // процессор
+    videoCard: {type: DataTypes.STRING, allowNull: false}, // видео карта
+    ram: {type: DataTypes.STRING, allowNull: false}, // Оперативная память
+    memory: {type: DataTypes.STRING, allowNull: false}, // Встроенная память
 })
+
 
 
 const Model = sequelize.define('model',{
     id: {type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true},
     name: {type: DataTypes.STRING, unicode: true, allowNull: false},
 })
+
 
 User.hasOne(Basket)
 Basket.belongsTo(User)

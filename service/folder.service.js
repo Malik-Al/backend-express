@@ -40,8 +40,25 @@ class FolderService{
             }
             fs.unlink(fileDelete, function (err) { // удаление файла
                 if (err) throw err
-                else console.log('file deleted...')
+                else {
+                    console.log('file deleted...')
+                    fs.readdir(pathUrl, (err, files) => { // проверить содержимое папки
+                        if (err)
+                            console.log(err);
+                        else {
+                            if(!files[0]){ // если папка пуста удалить папку
+                                fs.rmdir(pathUrl, err => {
+                                    if(err) throw err; // не удалось удалить папку
+                                    else { // удаление папки
+                                        console.log('deleted static folder...')
+                                    }
+                                });
+                            }
+                        }
+                    })
+                }
             })
+
         }
     }
 

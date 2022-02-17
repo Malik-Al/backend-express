@@ -3,9 +3,27 @@ const laptopService = require('../service/laptop.service')
 class LaptopController {
     async create(req, res, next) {
         try {
-            const {name, price, description, modelId} = req.body
+            const {
+                name,
+                price,
+                modelId,
+                screen,
+                processing,
+                videoCard,
+                ram,
+                memory
+            } = req.body
             const {img} = req.files
-            const laptop = await laptopService.createLaptop(name, price, description, modelId, img)
+            const laptop = await laptopService.createLaptop(
+                name,
+                price,
+                modelId,
+                screen,
+                processing,
+                videoCard,
+                ram,
+                memory,
+                img)
             return res.json(laptop)
         }catch (e){
             next(e)

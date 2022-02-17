@@ -1,15 +1,34 @@
 const uuid = require("uuid");
 const path = require("path");
-const {Laptop} = require("../models/models");
+const {Laptop, LaptopInfo} = require("../models/models");
 const ApiError = require("../error/apiError");
 const folderService = require('./folder.service')
 
 class LaptopService {
 
-    async createLaptop(name, price, description, modelId, img) {
+    async createLaptop(
+        name,
+        price,
+        modelId,
+        screen,
+        processing,
+        videoCard,
+        ram,
+        memory,
+        img
+    ) {
         let fileName = `${uuid.v4()}.jpg`
         await folderService.create(img, fileName)
-        return await Laptop.create({name, price, description, modelId, img: fileName})
+        return await Laptop.create({
+            name,
+            price,
+            modelId,
+            screen,
+            processing,
+            videoCard,
+            ram,
+            memory,
+            img: fileName})
     }
 
 
@@ -22,7 +41,7 @@ class LaptopService {
 
 
     async getOneLaptop(id){
-       return await Laptop.findOne({where: {id}})
+      return await Laptop.findOne({where: {id},})
     }
 
 
