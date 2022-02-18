@@ -57,17 +57,49 @@ class LaptopService {
     }
 
 
-    async updateLaptop(name, price, description, modelId, img,id){  // TODO доработать
-        let fileName = `${uuid.v4()}.jpg`
-        await img.mv(path.resolve(__dirname, '..', 'static', fileName))
-        const data = {
-            name: name,
-            price: price,
-            description: description,
-            modelId: modelId,
-            img: fileName
+    async updateLaptop(
+        name,
+        price,
+        modelId,
+        screen,
+        processing,
+        videoCard,
+        ram,
+        memory,
+        img,
+        id
+    ){  // TODO доработать
+
+        if(!img){
+            const data = {
+                name: name,
+                price: price,
+                modelId: modelId,
+                screen: screen,
+                processing: processing,
+                videoCard: videoCard,
+                ram: ram,
+                memory: memory,
+            }
+            return await Laptop.update(data,{where: {id}})
         }
-        return await Laptop.update(data,{where: {id}})
+        if(img) {
+            let fileName = `${uuid.v4()}.jpg`
+            await img.mv(path.resolve(__dirname, '..', 'static', fileName))
+            const data = {
+                name: name,
+                price: price,
+                modelId: modelId,
+                screen: screen,
+                processing: processing,
+                videoCard: videoCard,
+                ram: ram,
+                memory: memory,
+                img: fileName
+            }
+            return await Laptop.update(data,{where: {id}})
+        }
+
     }
 
 

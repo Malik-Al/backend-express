@@ -52,10 +52,28 @@ class LaptopController {
 
     async update(req, res, next) {  // TODO доработать
         try {
-            const {name, price, description, modelId} = req.body
+            const {
+                name,
+                price,
+                modelId,
+                screen,
+                processing,
+                videoCard,
+                ram,
+                memory
+            } = req.body
             const {id} = req.params
-            const {img} = req.files
-            const newLaptop = await laptopService.updateLaptop(name, price, description, modelId, img, id)
+            const img = req.files?.img ?? ''
+            const newLaptop = await laptopService.updateLaptop(
+                name,
+                price,
+                modelId,
+                screen,
+                processing,
+                videoCard,
+                ram,
+                memory,
+                img, id)
             return res.json(newLaptop)
 
         }catch (e) {
