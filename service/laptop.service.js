@@ -68,8 +68,8 @@ class LaptopService {
         memory,
         img,
         id
-    ){  // TODO доработать
-
+    ){
+        const laptop = await Laptop.findOne({where: {id}}) // один laptop
         if(!img){
             const data = {
                 name: name,
@@ -84,6 +84,9 @@ class LaptopService {
             return await Laptop.update(data,{where: {id}})
         }
         if(img) {
+            if(laptop.img){ // удоляем старое фото laptop
+                await folderService.remove(laptop.img)
+            }
             let fileName = `${uuid.v4()}.jpg`
             await img.mv(path.resolve(__dirname, '..', 'static', fileName))
             const data = {

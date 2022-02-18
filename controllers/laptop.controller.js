@@ -50,7 +50,7 @@ class LaptopController {
         }
     }
 
-    async update(req, res, next) {  // TODO доработать
+    async update(req, res, next) {
         try {
             const {
                 name,
