@@ -24,7 +24,7 @@ const Basket = sequelize.define('basket',{
 
 
 const BasketLaptop = sequelize.define('basket_laptop',{
-    id: {type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true},
+    quantity: {type: DataTypes.INTEGER, defaultValue: 1},
 })
 
 
@@ -55,14 +55,13 @@ Basket.belongsTo(User)
 User.hasMany(Token)  // connect token user
 Token.belongsTo(User)
 
-Basket.hasMany(BasketLaptop)
-BasketLaptop.belongsTo(Basket)
-
 Model.hasMany(Laptop)
 Laptop.belongsTo(Model)
 
-Laptop.hasMany(BasketLaptop)
-BasketLaptop.belongsTo(Laptop)
+
+Basket.belongsToMany(Laptop,{through: BasketLaptop, onDelete: 'CASCADE'})
+Laptop.belongsToMany(Basket, {through: BasketLaptop})
+
 
 module.exports = {
     User,
