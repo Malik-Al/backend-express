@@ -1,4 +1,3 @@
-const apiError = require('../error/api.error')
 const modelService = require('../service/model.service')
 
 class ModelController {

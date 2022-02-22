@@ -1,12 +1,12 @@
 const Router = require('express')
 const router = new Router()
-const {create, getAll, createBasket, getAllBasketLaptop} = require('../controllers/basket.controller')
+const {create, getAll, getAllBasketLaptop, getOne} = require('../controllers/basket.controller')
 
 
 router.get('/', getAllBasketLaptop)
-router.get('/one', getAll)
-router.get('/create', createBasket)
-router.post('/laptop/append', create)
+router.get('/id', getAll)
+router.get('/:id', getOne)
+router.post('/:basketId/:laptopId/append/:quantity([0-9]+)', create)
 
 
 module.exports = router

@@ -3,16 +3,7 @@ const laptopService = require('../service/laptop.service')
 class LaptopController {
     async create(req, res, next) {
         try {
-            const {
-                name,
-                price,
-                modelId,
-                screen,
-                processing,
-                videoCard,
-                ram,
-                memory
-            } = req.body
+            const {name, price, modelId, screen, processing, videoCard, ram, memory} = req.body
             const {img} = req.files
             const laptop = await laptopService.createLaptop(
                 name,
@@ -32,7 +23,7 @@ class LaptopController {
 
     async getAll(req, res, next) {
         try {
-            const {modelId} = req.query
+            const {modelId} = req.params
             let laptopsModel = await laptopService.getAllLaptops(modelId)
             return res.json(laptopsModel)
         }catch (e) {
@@ -52,28 +43,10 @@ class LaptopController {
 
     async update(req, res, next) {
         try {
-            const {
-                name,
-                price,
-                modelId,
-                screen,
-                processing,
-                videoCard,
-                ram,
-                memory
-            } = req.body
+            const {name, price, modelId, screen, processing, videoCard, ram, memory} = req.body
             const {id} = req.params
             const img = req.files?.img ?? ''
-            const newLaptop = await laptopService.updateLaptop(
-                name,
-                price,
-                modelId,
-                screen,
-                processing,
-                videoCard,
-                ram,
-                memory,
-                img, id)
+            const newLaptop = await laptopService.updateLaptop(name, price, modelId, screen, processing, videoCard, ram, memory, img, id)
             return res.json(newLaptop)
 
         }catch (e) {

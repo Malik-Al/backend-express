@@ -6,17 +6,7 @@ const folderService = require('./folder.service')
 
 class LaptopService {
 
-    async createLaptop(
-        name,
-        price,
-        modelId,
-        screen,
-        processing,
-        videoCard,
-        ram,
-        memory,
-        img
-    ) {
+    async createLaptop(name, price, modelId, screen, processing, videoCard, ram, memory, img) {
         let fileName = `${uuid.v4()}.jpg`
         await folderService.create(img, fileName)
         return await Laptop.create({
@@ -28,7 +18,8 @@ class LaptopService {
             videoCard,
             ram,
             memory,
-            img: fileName})
+            img: fileName
+        })
     }
 
 
@@ -57,18 +48,7 @@ class LaptopService {
     }
 
 
-    async updateLaptop(
-        name,
-        price,
-        modelId,
-        screen,
-        processing,
-        videoCard,
-        ram,
-        memory,
-        img,
-        id
-    ){
+    async updateLaptop(name, price, modelId, screen, processing, videoCard, ram, memory, img, id){
         const laptop = await Laptop.findOne({where: {id}}) // один laptop
         if(!img){
             const data = {

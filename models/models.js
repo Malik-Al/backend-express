@@ -42,6 +42,11 @@ const Laptop = sequelize.define('laptop',{
 })
 
 
+const Rating = sequelize.define('rating', {          // Райтинг товара
+    id: {type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true},
+    rate: {type: DataTypes.INTEGER, allowNull: false},
+})
+
 
 const Model = sequelize.define('model',{
     id: {type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true},
@@ -52,11 +57,23 @@ const Model = sequelize.define('model',{
 User.hasOne(Basket)
 Basket.belongsTo(User)
 
-User.hasMany(Token)  // connect token user
+User.hasMany(Token, {onDelete: 'CASCADE'})  // connect token user
 Token.belongsTo(User)
 
-Model.hasMany(Laptop)
+// связь пользователя с рейтингами: пользователь может оценить несколько товаров,
+// но каждая запись в таблице ratings связана только с одним пользователем
+User.hasMany(Rating, {onDelete: 'CASCADE'})
+Rating.belongsTo(User)
+
+
+Model.hasMany(Laptop, {onDelete: 'CASCADE'})
 Laptop.belongsTo(Model)
+
+
+// связь товара с рейтингами: товар может иметь несколько оценок от разных
+// пользователей, но каждая оценка пользователя принадлежит одному товару
+Laptop.hasMany(Rating, {onDelete: 'CASCADE'})
+Rating.belongsTo(Laptop)
 
 
 Basket.belongsToMany(Laptop,{through: BasketLaptop, onDelete: 'CASCADE'})
@@ -70,4 +87,5 @@ module.exports = {
     Model,
     Laptop,
     BasketLaptop,
+    Rating
 }

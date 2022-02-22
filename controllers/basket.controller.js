@@ -1,24 +1,17 @@
 const BasketService = require('../service/basket.service')
 
 class BasketController {
-    async createBasket(req, res, next) {
-        try {
-            const basketId = await BasketService.createBasket()
-            res.json(basketId)
-        }catch (e) {
-            next(e)
-        }
-    }
 
     async create(req, res, next){
         try {
-            const {basketId, laptopId, quantity} = req.body
+            const {basketId, laptopId, quantity} = req.params
             const create = await BasketService.appendBasketLaptop(basketId, laptopId, quantity)
             res.json(create)
         }catch (e) {
             next(e)
         }
     }
+
 
     async getAll(req, res, next){
         try {
@@ -28,6 +21,18 @@ class BasketController {
             next(e)
         }
     }
+
+    async getOne(req, res, next){
+        try {
+            const {id} = req.params
+            const getAll = await BasketService.getOneBasket(id)
+            res.json(getAll)
+        }catch (e) {
+            next(e)
+        }
+    }
+
+
 
     async getAllBasketLaptop(req, res, next){
         try {
