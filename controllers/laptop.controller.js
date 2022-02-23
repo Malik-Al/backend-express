@@ -21,6 +21,7 @@ class LaptopController {
         }
     }
 
+
     async getAll(req, res, next) {
         try {
             const {modelId} = req.params
@@ -31,6 +32,7 @@ class LaptopController {
         }
     }
 
+
     async getOne(req, res, next) {
         try {
             const {id} = req.params
@@ -40,6 +42,7 @@ class LaptopController {
             next(e)
         }
     }
+
 
     async update(req, res, next) {
         try {
@@ -53,6 +56,7 @@ class LaptopController {
             next(e)
         }
     }
+
 
     async remove(req, res, next) {
         try {

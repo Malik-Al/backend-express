@@ -1,11 +1,12 @@
 const {Laptop, User, Rating} = require('../models/models')
-
+const TokenService = require('./auth/token.service')
+const ApiError = require('../error/api.error')
 
 class RatingService {
     async getOne(laptopId) {
         const laptop = await Laptop.findByPk(laptopId)
         if (!laptop) {
-            throw new Error('Laptop не найден в БД')
+            throw ApiError.badRequest()
         }
         const votes = await Rating.count({where: {laptopId}})
         if (votes) {
@@ -15,23 +16,21 @@ class RatingService {
         return {rates: 0, votes: 0, rating: 0}
     }
 
-    async create(userId, laptopId, rate) { // TODO надо до работать
-        console.log('userId', userId)
-        console.log('laptopId', laptopId)
-        console.log('rate', rate)
 
+    async create(authUser, laptopId, rate) {
+        const userToken = authUser.split(' ')[1]
+        const userId = TokenService.validateAccessToken(userToken).id // получаем id ползователя по токену
         const laptop = await Laptop.findByPk(laptopId)
         if (!laptop) {
-            throw new Error('Laptop не найден в БД')
+            throw ApiError.badRequest('Нет laptop с таким id в базе!')
         }
         const user = await User.findByPk(userId)
         if (!user) {
-            throw new Error('Пользователь не найден в БД')
+            throw ApiError.badRequest('Нет user с таким id в базе!')
         }
-        const rating = await Rating.create({rate, userId, laptopId})
+        const rating = await Rating.create({userId, rate, laptopId})
         return rating
     }
 }
-
 
 module.exports = new RatingService()

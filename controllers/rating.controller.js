@@ -10,11 +10,12 @@ class RatingController {
         }
     }
 
-    async create(req, res, next) { // TODO надо до работать
+
+    async createRating(req, res, next) {
         try {
             const {laptopId, rate} = req.params
-            const userId = req.auth.userId
-            const rating = await RatingService.create(userId, laptopId, rate)
+            const authUser = req.headers.authorization
+            const rating = await RatingService.create(authUser, laptopId, rate)
             res.json(rating)
         } catch(e) {
             next(e)

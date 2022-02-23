@@ -18,6 +18,7 @@ class UserController {
         }
     }
 
+
     async login(req, res, next) {
         try {
             const {email, password} = req.body
@@ -30,6 +31,7 @@ class UserController {
         }
     }
 
+
     async logout(req, res, next) {
         try {
             const {refreshToken} = req.cookies // достаем refreshToken
@@ -41,12 +43,12 @@ class UserController {
         }
     }
 
+
     async activate(req, res, next) {
         try {
             const activationLink = req.params.link
             await userService.activate(activationLink)
             return res.redirect(process.env.API_URL_FRONTEND)
-
         }catch (e) {
             next(e)
         }
@@ -64,6 +66,7 @@ class UserController {
         }
     }
 
+
     async getUsers(req, res, next) {
         try {
             const users = await userService.getAllUsers()
@@ -74,7 +77,7 @@ class UserController {
     }
 
 
-    async check(req, res, next) {
+    async check(req, res, next) { // TODO пока не используется
         const {id} = req.query
         if(!id){
             return next(apiError.badRequest('Не задан id!'))

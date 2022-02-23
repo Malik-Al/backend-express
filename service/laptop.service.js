@@ -5,7 +5,6 @@ const ApiError = require("../error/api.error");
 const folderService = require('./folder.service')
 
 class LaptopService {
-
     async createLaptop(name, price, modelId, screen, processing, videoCard, ram, memory, img) {
         let fileName = `${uuid.v4()}.jpg`
         await folderService.create(img, fileName)
@@ -82,9 +81,7 @@ class LaptopService {
             }
             return await Laptop.update(data,{where: {id}})
         }
-
     }
-
-
 }
+
 module.exports = new LaptopService()

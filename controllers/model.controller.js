@@ -11,6 +11,7 @@ class ModelController {
         }
     }
 
+
     async getAll(req, res, next) {
         try {
             const models = await modelService.getAllModels()
@@ -31,4 +32,5 @@ class ModelController {
         }
     }
 }
+
 module.exports = new ModelController()

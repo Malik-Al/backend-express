@@ -26,6 +26,7 @@ class UserService {
         return {...tokens, userId: userDto} // вернет tokens, id, email, isActivate
     }
 
+
     async activate(activationLink){
         const user = await User.findOne({where: {activationLink: activationLink}}) // проверка на наличие ссылки активаций
         if(!user){
@@ -34,6 +35,7 @@ class UserService {
         user.isActivated = true; // меняем поля isActivated в значение true и сохроняем
         await user.save();
     }
+
 
     async login(email, password){
         const user = await User.findOne({where: {email: email}})  // проверка на наличие пользователя в базе
@@ -49,13 +51,14 @@ class UserService {
 
         await tokenService.saveToken(userDto.id, tokens.refreshToken) // сохронения refresh токена в базу
         return {...tokens, userId: userDto} // вернет tokens, id, email, isActivate
-
     }
+
 
     async logout(refreshToken){
         const token = await tokenService.removeToken(refreshToken)
         return token
     }
+
 
     async refresh(refreshToken){
         if(!refreshToken){
@@ -80,7 +83,6 @@ class UserService {
     async getAllUsers(){
         return await User.findAll()
     }
-
 }
 
 module.exports = new UserService()

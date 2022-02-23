@@ -5,7 +5,6 @@ const readdir = promisify(fs.readdir);
 const ApiError = require("../error/api.error");
 
 class FolderService{
-
     pathGenerateUrl(fileName){ // функция со созданию обсалутного пути
         if(fileName){
             return path.resolve(__dirname, '..', 'static', fileName)
@@ -61,8 +60,6 @@ class FolderService{
 
         }
     }
-
-
 }
 
 module.exports = new FolderService()

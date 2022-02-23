@@ -22,6 +22,7 @@ class TokenService {
         }
     }
 
+
     validateRefreshToken(){
         try {
             const refreshData = jwt.verify(token, process.env.JWT_REFRESH_SECRET) // валидация токена
@@ -30,7 +31,6 @@ class TokenService {
             return null
         }
     }
-
 
 
     async saveToken(userId, refreshToken){
@@ -43,10 +43,12 @@ class TokenService {
         return token
     }
 
+
     async removeToken(refreshToken){
         const tokenData = await Token.destroy({where: {refreshToken}}) // поиск и удаление refreshToken
         return tokenData
     }
+
 
     async findToken(refreshToken){
         const tokenData = await Token.findOne({where: {refreshToken: refreshToken}}) // поиск  refreshToken
