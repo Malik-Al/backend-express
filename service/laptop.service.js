@@ -3,6 +3,7 @@ const path = require("path");
 const {Laptop} = require("../models/models");
 const ApiError = require("../error/api.error");
 const folderService = require('./folder.service')
+const {Op} = require('sequelize');
 
 class LaptopService {
     async createLaptop(name, price, modelId, screen, processing, videoCard, ram, memory, img) {
@@ -82,6 +83,23 @@ class LaptopService {
             return await Laptop.update(data,{where: {id}})
         }
     }
+
+   async searchLaptop(query){
+        if(query){
+            const laptop = await Laptop.findAll({
+                where: {name: query}
+                // where: {
+                //     name: {
+                //         [Op.like]: `${query}%`
+                //     }
+                // }
+            })
+            return laptop
+        }
+        return await Laptop.findAll()
+
+    }
+
 }
 
 module.exports = new LaptopService()

@@ -67,6 +67,16 @@ class LaptopController {
             next(e)
         }
     }
+
+    async search(req, res, next){
+        try {
+            const {query} = req.query
+            const searchQuery = await laptopService.searchLaptop(query)
+            return res.json(searchQuery)
+        }catch (e) {
+            next(e)
+        }
+    }
 }
 
 module.exports = new LaptopController()
